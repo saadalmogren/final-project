@@ -58,10 +58,9 @@ body{
     overflow-x: hidden;
     background-image: url("images/wp.jpg");
     background-attachment: fixed;
-    background-position: center;
+    background-position: 50% 50%;
     background-repeat: no-repeat;
     background-size: cover;
-    background-size: 100%;
     margin: 0;
     padding: 0;
 }
@@ -72,7 +71,12 @@ nav{
     margin-bottom: 5px;
 }
 
-
+.container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 .col-sm{
     display: flex;
     flex-direction: column;
@@ -110,6 +114,13 @@ nav{
     animation: slide-in-right 1s 0.5s ease-in-out both;
     display: flex
 }
+.list-group, .col-2, .list-group{
+    text-align: center;
+    max-width: 100% !important;
+}
+.col-2{
+    padding: 0 20px;
+}
 .tab-content{
     padding:0 20px;
     margin: 10px 0;
@@ -117,8 +128,22 @@ nav{
 }
 #standings-list .list-group-item{
     display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr;
-    grid-gap: 50px;
+    grid-template-columns: 10fr 1fr 1fr 1fr 1fr 1fr;
+    grid-gap: 30px;
+}
+@media only screen and (max-width: 600px) {
+    #standings-list .list-group-item{
+        grid-gap: 10px;
+    }
+}
+#standings-list .list-group-item:first-of-type{
+    background-color: #343a40;
+    color: white;
+    padding-left: 20px;
+}
+
+p{
+    margin: 0;
 }
 .date{
     width: 100%;
@@ -135,34 +160,28 @@ nav{
     flex-direction: column;
     align-items: center;
 }
-.list-item{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    padding:10px 100px;
-    margin: 0 30px;
-    margin-bottom: 10px;
-}
-.list-item:first-of-type{
-    margin-top: 30px; 
-}
-.list-item p{
-    text-transform: capitalize;
-    margin: 0;
-}
+
 .match{
-    text-align: center;
-    width: 100%;
+  display: grid;
+  grid-template-columns: 3fr 1fr 3fr;
 }
-.home ,.away{
-    width: 26%;
-    text-align: center;
+@media only screen and (max-width: 600px) {
+    .match{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+}
+.home {
+    text-align: right;
+}
+.away{
+    text-align: left;
 }
 
 .score,.time{
-    padding: 10px;
+    
     text-align: center;
-    margin:0;
+    margin:0 20px;
 }

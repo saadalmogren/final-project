@@ -111,14 +111,15 @@ body{
     z-index: 10;
    
 }
-.return{
-    animation: slide-in-left 1s 0.5s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
-}
 .col-sm:hover{
     transition: 500ms;
     box-shadow: 0 0 4px 1px rgba(39, 172, 216, 1);
 
 }
+.return{
+    animation: slide-in-left 1s 0.5s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
+}
+
 .exit {
     animation: slide-out-left 1s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
     
@@ -181,7 +182,9 @@ body{
 #standings-list,#matches-list{
     margin-bottom: 50px;
 }
-
+#matches-list .list-group-item:last-of-type{
+    padding-bottom: 20px;
+}
 p{
     margin: 0;
 }

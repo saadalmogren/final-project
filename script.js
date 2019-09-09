@@ -1,18 +1,26 @@
 $(document).ready(function () {
+  AOS.init({
+    offset: 0,
+    duration: 500,
+    once: false
+  })
   $("button").click(function () {
-    $(".container").removeClass("exit")
-    $(".team-info").removeClass("enter")
+    $(".container").removeClass("exit").addClass("return")
+    $(".team-info").attr("class", "team-info remove")
+    $('body').css('overflow-y',"hidden")
+    
+
   })
   $(".col-sm").click(function () {
-    $('.list-item').remove();
-    $(".container").toggleClass("exit")
-    $(".team-info").toggleClass("enter")
-    // $(".container").hide();
     var img = $(this).children('img').attr('src')
-    console.log(img)
+    $(".team-info").children('img').attr('src', img)
+    $('.list-group-item').remove("#list");
+    $(".container").toggleClass("exit")
+    $(".team-info").attr("class", "team-info enter")
+    $('body').css('overflow-y',"auto")
 
+    
     var id = $(this).attr('id');
-    console.log(id)
     $.ajax({
       headers: { 'X-Auth-Token': 'a65dc5386ad14455a743b88dd047b5df' },
       url: `https://api.football-data.org/v2/competitions/${id}/standings`,
@@ -20,7 +28,7 @@ $(document).ready(function () {
       type: 'GET',
     }).done(function (response) {
       $stand = $('#standings-list')
-      
+
       var array = response.standings[0].table;
       for (let i = 0; i < array.length; i++) {
         standings(array[i]);
@@ -33,14 +41,14 @@ $(document).ready(function () {
         var draw = pos.draw
         var lost = pos.lost
         var points = pos.points
-        $stand.append(`<li class="list-group-item">
-        <p>${name}</p>
+        $stand.append(`<li class="list-group-item" id="list" data-aos="fade-right">
+        <p> ${position}. ${name}</p>
         <p>${played}</p> 
         <p>${won}</p>      
         <p>${draw}</p>
         <p>${lost}</p>
         <p>${points}</p>
-    </div> `)
+    </li> `)
       }
       var matchDay = response.season.currentMatchday
       match(matchDay)
@@ -52,12 +60,12 @@ $(document).ready(function () {
           type: 'GET',
         }).done(function (response) {
           var $team = $(`#matches-list`);
-          $(".team-info").children('img').attr('src', img)
+          
           for (let j = 0; j < response.matches.length; j++) {
             var date = new Date(response.matches[j].utcDate);
             var month = date.getMonth() + 1;
             var day = date.getDate();
-            var formate = month + "/" + day;
+            var format = month + "/" + day;
 
             if (response.matches[j].status === "FINISHED") {
               finish(response.matches[j])
@@ -72,17 +80,17 @@ $(document).ready(function () {
             var away = match.awayTeam.name;
             var homeScore = match.score.fullTime.homeTeam;
             var awayScore = match.score.fullTime.awayTeam;
-            
-            $team.append($('<div>', { class: 'list-group-item' })
-              .html(`<div class="date">${formate}</div>
-                <div class = "match"><span class="home">${home}</span><span class="score"> ${homeScore + " - " + awayScore}</span><span class="away">${away}</span></div>`));
+
+            $team.append(`<li class="list-group-item" id="list">
+              <div class="date">${format}</div>
+                <div class = "match"><span class="home">${home}</span><span class="score"> ${homeScore + " - " + awayScore}</span><span class="away">${away}</span></div></li>`);
 
 
           }
           function scheduled(match) {
             var home = match.homeTeam.name;
             var away = match.awayTeam.name;
-            
+
             var hours = date.getHours();
             var min = date.getMinutes();
 
@@ -92,13 +100,15 @@ $(document).ready(function () {
             var time = hours + ":" + min;
 
 
-            $team.append($('<div>', { class: 'list-group-item' })
-              .html(`<div class="date">${formate}</div>
-                <div class = "match"><span class="home">${home}</span><span class="time">${time}</span><span class="away">${away}</span></div>`));
+            $team.append(`<li class="list-group-item" id="list">
+              <div class="date">${format}</div>
+                <div class = "match">
+                <span class="home">${home}</span><span class="time">${time}</span><span class="away">${away}</span>
+                </div>
+                </li>`);
 
           }
         })
-
       }
     })
   })

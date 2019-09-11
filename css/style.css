@@ -78,6 +78,10 @@
   }
   
 body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
     overflow-x: hidden;
     background-image: url("../images/wp.jpg");
     background-attachment: fixed;
